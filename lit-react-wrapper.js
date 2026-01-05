@@ -28,7 +28,7 @@ export class LitReactWrapper extends LitElement {
   }
 
   createElement() {
-    this.reactElement = React.createElement(this.element, this.props, React.createElement('slot'));
+    this.reactElement = React.createElement(this.element, { ...this.props, mountPoint: this.mountPoint }, React.createElement('slot'));
     return this.reactElement;
   }
   
