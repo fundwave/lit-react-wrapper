@@ -11,7 +11,7 @@ export class LitReactWrapper extends LitElement {
       mountPoint: Object,
       props: Object,
       element: Object,
-      styles: String,
+      styles: Array,
       styleElement: Object,
     };
   }
