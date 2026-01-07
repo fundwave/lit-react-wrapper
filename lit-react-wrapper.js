@@ -40,7 +40,12 @@ export class LitReactWrapper extends LitElement {
       this.shadowRoot.removeChild(this.styleElement);
     }
 
-    const styleContent = Array.isArray(this.styles) ? this.styles.join("\n") : this.styles;
+    let styleContent = "";
+    if (Array.isArray(this.styles)) {
+      styleContent = this.styles.join("\n");
+    } else if (typeof this.styles === "string") {
+      styleContent = this.styles;
+    }
 
     if (styleContent) {
       this.styleElement = document.createElement("style");
