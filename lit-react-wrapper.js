@@ -69,13 +69,12 @@ export class LitReactWrapper extends LitElement {
 
   firstUpdated() {
     this.mountPoint = this.shadowRoot.getElementById("mountPoint");
-    this.injectStyles();
     this.renderElement();
     retargetEvents(this.shadowRoot);
   }
 
   updated(changedProperties) {
-    if (changedProperties.has("styles") || changedProperties.has("element")) {
+    if (changedProperties.has("styles")) {
       this.injectStyles();
     }
     if (changedProperties.has("props") || changedProperties.has("element")) {
