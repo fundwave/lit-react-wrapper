@@ -12,7 +12,9 @@ export class LitReactWrapper extends LitElement {
       props: Object,
       element: Object,
       styles: Array,
-      styleElement: Object,
+      _styleElement: Object,
+      _reactRef: Object,
+      _reactElement: Object,
     };
   }
 
@@ -20,7 +22,8 @@ export class LitReactWrapper extends LitElement {
     super();
     this.props = {};
     this.styles = [];
-    this.styleElement = null;
+    this._styleElement = null;
+    this._reactRef = React.createRef();
   }
 
   render() {
@@ -31,13 +34,16 @@ export class LitReactWrapper extends LitElement {
     const props = this.props || {};
     if (!props.mountContainer) props.mountContainer = this.mountPoint;
     if (!props.mountDocument) props.mountDocument = this.shadowRoot || document;
-    this.reactElement = React.createElement(this.element, props, React.createElement("slot"));
-    return this.reactElement;
+    this._reactElement = React.createElement(this.element, { ...props, ref: this._reactRef }, React.createElement("slot"));
+    return this._reactElement;
+  }
+  getRef() {
+    return this._reactRef;
   }
 
   injectStyles() {
-    if (this.styleElement && this.shadowRoot.contains(this.styleElement)) {
-      this.shadowRoot.removeChild(this.styleElement);
+    if (this._styleElement && this.shadowRoot.contains(this._styleElement)) {
+      this.shadowRoot.removeChild(this._styleElement);
     }
 
     let styleContent = "";
@@ -48,9 +54,9 @@ export class LitReactWrapper extends LitElement {
     }
 
     if (styleContent) {
-      this.styleElement = document.createElement("style");
-      this.styleElement.textContent = styleContent;
-      this.shadowRoot.insertBefore(this.styleElement, this.mountPoint);
+      this._styleElement = document.createElement("style");
+      this._styleElement.textContent = styleContent;
+      this.shadowRoot.insertBefore(this._styleElement, this.mountPoint);
     }
   }
 
