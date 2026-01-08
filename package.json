@@ -1,6 +1,6 @@
 {
   "name": "lit-react-wrapper",
-  "version": "1.0.3-inject-styles.1",
+  "version": "1.1.0",
   "description": "Use react or material-ui components in your lit-element web component.",
   "main": "lit-react-wrapper.js",
   "scripts": {
